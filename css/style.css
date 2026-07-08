@@ -5,8 +5,8 @@
   --paper:#ffffff;
   --slate:#5b6b7a;
   --line:rgba(13,27,42,.12);
-  --brass:#b08d57;       /* warm metallic accent */
-  --brass-2:#c9a76a;
+  --brass:#bf271d;       /* C&T brand red */
+  --brass-2:#e14a3d;     /* lighter red for dark bg */
   --serif:'Cormorant Garamond',Georgia,serif;
   --sans:'Inter',system-ui,-apple-system,sans-serif;
   --pad:clamp(1.5rem,5vw,7rem);
@@ -76,9 +76,11 @@ a{color:inherit;text-decoration:none}
   max-width:1440px;margin:0 auto;padding:0 var(--pad);
   display:flex;align-items:center;justify-content:space-between;
 }
-.nav__brand{display:flex;align-items:baseline;gap:.5rem;color:#fff;transition:color .5s}
+.nav__brand{display:flex;align-items:center;color:#fff;transition:color .5s}
+.nav__brand-text{display:flex;align-items:baseline;gap:.5rem}
 .nav__mark{font-family:var(--serif);font-size:1.7rem;font-weight:600;letter-spacing:.02em}
 .nav__word{font-size:.7rem;letter-spacing:.42em;font-weight:500;opacity:.85}
+.nav__logo{height:44px;width:auto;display:none}
 .nav__links{display:flex;align-items:center;gap:2.4rem}
 .nav__links a{
   color:#fff;font-size:.82rem;letter-spacing:.08em;font-weight:400;
@@ -104,6 +106,8 @@ a{color:inherit;text-decoration:none}
 .nav.scrolled .nav__cta{border-color:var(--ink);color:var(--ink)}
 .nav.scrolled .nav__cta:hover{background:var(--ink);color:#fff!important}
 .nav.scrolled .nav__toggle span{background:var(--ink)}
+.nav.scrolled .nav__brand-text{display:none}
+.nav.scrolled .nav__logo{display:block}
 
 /* ---------- hero ---------- */
 .hero{position:relative;height:100vh;min-height:640px;display:flex;align-items:center;color:#fff}
@@ -184,15 +188,39 @@ a{color:inherit;text-decoration:none}
 }
 .area__grid li:hover{background:var(--ink);color:var(--sand)}
 
-/* ---------- reviews ---------- */
-.reviews{background:var(--ink);padding:clamp(5rem,10vw,9rem) var(--pad)}
-.reviews__grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
-.review{
-  background:var(--ink-2);border:1px solid rgba(255,255,255,.08);
-  padding:2.6rem;color:var(--sand);
+/* ---------- gallery ---------- */
+.gallery{background:var(--paper);padding:clamp(5rem,10vw,9rem) var(--pad)}
+.gallery__grid{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.gallery__grid figure{margin:0;aspect-ratio:1/1;overflow:hidden;background:var(--ink)}
+.gallery__grid img{transition:transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.gallery__grid figure:hover img{transform:scale(1.07)}
+
+/* ---------- steps ---------- */
+.steps{background:var(--ink);padding:clamp(5rem,10vw,9rem) var(--pad);text-align:center}
+.steps__grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem}
+.step{padding:1rem;color:var(--sand)}
+.step__num{
+  display:flex;align-items:center;justify-content:center;width:64px;height:64px;margin:0 auto 1.4rem;
+  border:1px solid var(--brass);border-radius:50%;font-family:var(--serif);font-size:1.7rem;color:var(--brass-2);
 }
-.review p{font-family:var(--serif);font-size:1.3rem;line-height:1.4;font-style:italic;margin-bottom:1.6rem}
-.review cite{font-style:normal;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:var(--brass-2)}
+.step h3{font-family:var(--serif);font-weight:500;font-size:1.7rem;margin-bottom:.7rem}
+.step p{color:rgba(245,241,234,.68);max-width:300px;margin:0 auto}
+.steps__cta{margin-top:clamp(2.6rem,5vw,4rem);display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+/* ---------- reviews ---------- */
+.reviews{background:var(--sand);padding:clamp(5rem,10vw,9rem) var(--pad)}
+.reviews__grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem}
+.review{
+  background:var(--paper);border:1px solid var(--line);
+  padding:2.4rem;color:var(--ink);display:flex;flex-direction:column;
+}
+.review__stars{color:var(--brass);letter-spacing:.15em;font-size:.95rem;margin-bottom:1.1rem}
+.review p{font-family:var(--serif);font-size:1.22rem;line-height:1.42;font-style:italic;margin-bottom:1.6rem;color:#22303d}
+.review cite{font-style:normal;font-size:.95rem;font-weight:600;color:var(--ink);margin-top:auto;display:flex;flex-direction:column;gap:.25rem}
+.review cite span{font-weight:400;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brass)}
+.reviews__cta{text-align:center;margin-top:clamp(2.4rem,5vw,3.5rem)}
+.reviews__cta .btn--ghost{border-color:var(--ink);color:var(--ink)}
+.reviews__cta .btn--ghost:hover{background:var(--ink);color:#fff}
 
 /* ---------- contact ---------- */
 .contact{background:var(--paper);padding:clamp(5rem,10vw,9rem) var(--pad)}
@@ -220,9 +248,16 @@ a.contact__line:hover{color:var(--brass)}
 /* ---------- footer ---------- */
 .footer{background:var(--ink);color:var(--sand);padding:clamp(3.5rem,7vw,5.5rem) var(--pad) 2rem}
 .footer__inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1.3fr;gap:2.5rem}
-.footer__brand .nav__mark{color:#fff}
-.footer__brand .nav__word{color:rgba(255,255,255,.7)}
-.footer__brand p{margin-top:1rem;color:rgba(245,241,234,.6);max-width:260px;font-size:.95rem}
+.footer__logo{height:74px;width:auto;background:#fff;padding:10px 14px;border-radius:8px;display:inline-block}
+.footer__brand p{margin-top:1.1rem;color:rgba(245,241,234,.6);max-width:260px;font-size:.95rem}
+.footer__brand > a{display:inline-block;margin-top:.6rem;color:var(--brass-2);font-size:.92rem}
+.footer__brand > a:hover{color:#fff}
+.footer__social,.contact__socials{display:flex;gap:1.2rem;margin-top:1rem}
+.footer__social a{color:var(--brass-2)!important;padding:0}
+.footer__social a:hover{color:#fff!important}
+.contact__socials{margin-top:1.3rem}
+.contact__socials a{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);font-weight:500}
+.contact__socials a:hover{color:var(--ink)}
 .footer__col h4{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--brass-2);margin-bottom:1.2rem;font-weight:500}
 .footer__col a,.footer__col span{display:block;color:rgba(245,241,234,.72);font-size:.92rem;padding:.35rem 0;transition:color .3s}
 .footer__col a:hover{color:#fff}
@@ -239,6 +274,8 @@ a.contact__line:hover{color:var(--brass)}
   .reviews__grid{grid-template-columns:1fr}
   .stats{grid-template-columns:repeat(2,1fr)}
   .footer__inner{grid-template-columns:1fr 1fr}
+  .gallery__grid{grid-template-columns:repeat(2,1fr)}
+  .steps__grid{grid-template-columns:1fr;gap:2.8rem}
 }
 @media(max-width:760px){
   .nav__links{
