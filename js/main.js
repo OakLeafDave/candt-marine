@@ -53,7 +53,7 @@
           io.unobserve(e.target);
         }
       });
-    }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px -4% 0px' });
 
     // stagger siblings that share a parent (stats, steps, reviews, gallery, feature list)
     revealEls.forEach(function (el) {
@@ -101,6 +101,42 @@
     window.addEventListener('resize', applyParallax);
     applyParallax();
   }
+
+  /* ---------- Video slideshow ---------- */
+  (function () {
+    var slider = document.getElementById('vslider');
+    if (!slider) return;
+    var slides = Array.prototype.slice.call(slider.querySelectorAll('.vslide'));
+    var dotsWrap = document.getElementById('vsDots');
+    var i = 0, timer = null;
+
+    slides.forEach(function (s, idx) {
+      var b = document.createElement('button');
+      b.setAttribute('aria-label', 'Show ' + (s.getAttribute('data-label') || ('slide ' + (idx + 1))));
+      if (idx === 0) b.className = 'is-active';
+      b.addEventListener('click', function () { go(idx); reset(); });
+      dotsWrap.appendChild(b);
+    });
+    var dots = Array.prototype.slice.call(dotsWrap.children);
+
+    function go(n) {
+      slides[i].classList.remove('is-active');
+      dots[i].classList.remove('is-active');
+      i = (n + slides.length) % slides.length;
+      slides[i].classList.add('is-active');
+      dots[i].classList.add('is-active');
+    }
+    function reset() {
+      if (reduce) return;
+      clearInterval(timer);
+      timer = setInterval(function () { go(i + 1); }, 5000);
+    }
+    document.getElementById('vsNext').addEventListener('click', function () { go(i + 1); reset(); });
+    document.getElementById('vsPrev').addEventListener('click', function () { go(i - 1); reset(); });
+    slider.addEventListener('mouseenter', function () { clearInterval(timer); });
+    slider.addEventListener('mouseleave', reset);
+    reset();
+  })();
 
   /* ---------- Year ---------- */
   document.getElementById('year').textContent = new Date().getFullYear();
