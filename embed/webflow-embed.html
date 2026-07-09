@@ -1,0 +1,29 @@
+<!-- ================================================================
+     C&T MARINE — Webflow embed loader
+     Paste this whole block into ONE Embed element on the Home page
+     in the C&T Marine Webflow site. It loads the fonts + CSS, pulls
+     in the site markup, then runs the animation script.
+     Future edits: just `git push` this repo — the Webflow site
+     updates automatically (nothing to re-paste).
+================================================================= -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://oakleafdave.github.io/candt-marine/css/style.css">
+
+<div id="ct-marine-root"></div>
+
+<script>
+(function () {
+  fetch('https://oakleafdave.github.io/candt-marine/embed/body.html')
+    .then(function (r) { return r.text(); })
+    .then(function (html) {
+      var root = document.getElementById('ct-marine-root');
+      root.outerHTML = html;
+      var s = document.createElement('script');
+      s.src = 'https://oakleafdave.github.io/candt-marine/js/main.js';
+      document.body.appendChild(s);
+    })
+    .catch(function (e) { console.error('C&T Marine load failed:', e); });
+})();
+</script>
